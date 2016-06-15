@@ -20,8 +20,8 @@ delayer.prototype.loading = function (){
 		var src = _this.getAttr(tags[i],_this.config.source),fixed = _this.getAttr(tags[i],_this.config.fixed);
 		if(tags[i].offsetTop <= stop + _this.winHeight){
 			_this.setAttr(tags[i],'src',src);
-			_this.setAttr(tags[i],'data-source',null);
-			_this.setAttr(tags[i],'data-fixed',null);
+			_this.setAttr(tags[i],_this.config.source,null);
+			_this.setAttr(tags[i],_this.config.fixed,null);
 			if(fixed != null){
 				tags[i].addEventListener('load',function (){
 					_this.imageReady(this);
