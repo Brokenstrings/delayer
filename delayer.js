@@ -4,20 +4,18 @@ var delayer = function (config){
 	this.target = this.config.target == 'body' ? document.body : document.body.querySelector(this.config.target);
 	this.init();
 };
- 
+
 delayer.prototype.init = function (){
 	var _this = this;
 	_this.loading();
-	window.addEventListener('scroll',function (){
-		_this.loading();
-	},false);
+	window.addEventListener('scroll',_this.scrollEvt,false);
 };
 
 delayer.prototype.loading = function (){
 	var _this = this;
 	var stop = _this.target.scrollTop,tags = _this.getTags();
 	if(tags.length == 0){
-		window.removeEventListener('scroll');
+		window.removeEventListener('scroll',_this.scrollEvt,false);
 		return;
 	}
 	for(var i = 0; i < tags.length; i ++){
@@ -33,7 +31,11 @@ delayer.prototype.loading = function (){
 			}
 		}
 	}
-}
+};
+
+delayer.prototype.scrollEvt = function (){
+	this === window ? this.delayer.loading() : this.loading();
+};
 
 delayer.prototype.getTags = function (){
 	return this.target.querySelectorAll('img[data-source]');
