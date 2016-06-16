@@ -8,14 +8,18 @@ var delayer = function (config){
 delayer.prototype.init = function (){
 	var _this = this;
 	_this.loading();
-	window.onscroll = function (){
+	window.addEventListener('scroll',function (){
 		_this.loading();
-	}
+	},false);
 };
 
 delayer.prototype.loading = function (){
 	var _this = this;
 	var stop = _this.target.scrollTop,tags = _this.getTags();
+	if(tags.length == 0){
+		window.removeEventListener('scroll');
+		return;
+	}
 	for(var i = 0; i < tags.length; i ++){
 		var src = _this.getAttr(tags[i],_this.config.source),fixed = _this.getAttr(tags[i],_this.config.fixed);
 		if(tags[i].offsetTop <= stop + _this.winHeight){
