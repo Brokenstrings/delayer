@@ -20,7 +20,8 @@ delayer.prototype.loading = function (){
 	}
 	for(var i = 0; i < tags.length; i ++){
 		var src = _this.getAttr(tags[i],_this.config.source),fixed = _this.getAttr(tags[i],_this.config.fixed);
-		if(tags[i].offsetTop <= stop + _this.winHeight){
+		var objTop = fixed ? tags[i].parentNode.offsetTop : tags[i].offsetTop;
+		if(objTop >= stop && objTop < stop + _this.winHeight){
 			_this.setAttr(tags[i],'src',src);
 			_this.setAttr(tags[i],_this.config.source,null);
 			_this.setAttr(tags[i],_this.config.fixed,null);
